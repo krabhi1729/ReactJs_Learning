@@ -89,4 +89,63 @@ npm run test
 npm run build
 npm run lint
 ```
-## Q : 
+## Q : What is Babel ?
+Ans:-`Babe`l is a widely-used and popular open-source JavaScript compiler that allows developers to write modern JavaScript code and convert it into an older version of JavaScript that is widely supported by all browsers and environments. It falls under the category of "transpiler" or "source-to-source compiler" because it takes the source code written in one language (modern JavaScript) and translates it into equivalent source code in another language (older JavaScript).
+
+`Key features`:
+`ES Compatibility`: Babel enables developers to write code using the latest ECMAScript features, including ES6 (ECMAScript 2015), ES7, ES8, and beyond. This allows developers to take advantage of the latest language features, such as arrow functions, classes, spread operators, destructuring, and more.
+
+`Plugins and Presets`: Babel is highly configurable and extensible. It provides a modular architecture where developers can use various plugins and presets to customize the transformation process. `Plugins` are individual transformations that can be combined to achieve specific transformations, while `presets` are pre-defined sets of plugins designed for specific environments or language versions (e.g., @babel/preset-env).
+
+`Browser Compatibility`: Babel helps developers ensure that their code works across different browsers and environments, even those that do not support the latest JavaScript features. By transpiling modern code into older versions, developers can ensure a consistent and reliable experience for users.
+
+`Build Tools Integration`: Babel can be integrated into various build tools and workflows, such as Webpack, Rollup, Parcel, and more. This allows developers to seamlessly incorporate Babel into their development process.
+
+`Polyfills`: Babel can be used in combination with polyfills to provide missing functionality in older browsers. Polyfills are pieces of code that emulate newer JavaScript features in older environments. Babel, along with polyfills, enables developers to use modern APIs while ensuring backward compatibility.
+
+`Syntax Extensions`: Babel supports experimental syntax extensions to JavaScript. This enables developers to use proposed ECMAScript features that are not yet officially part of the language. However, it's important to note that using experimental features may come with compatibility risks, as they might change or be removed in future ECMAScript versions.
+
+`React and JSX`: Babel is commonly used with React to transpile JSX (JavaScript XML) syntax, which allows developers to write declarative UI components. `Babel converts JSX code into plain JavaScript function calls, making it compatible with all browsers.`
+
+## Q : Explain how babel plugin transform help to remove console.logs,which parcel cant do ?
+Ans:-Babel plugins can be used to transform code, and one common use case is to remove console.log statements from the code. By removing console.log statements, you can effectively strip out debugging code from your production build, reducing its size and improving performance.
+
+Parcel, being a zero-configuration bundler, does not perform additional code transformations like removing console.log statements by default. It aims to provide an easy and quick setup for bundling and development without requiring additional configuration.
+
+If you want to remove console.log statements or perform other code transformations in a Parcel-based project, you can use Babel with appropriate plugins and presets to customize the transformation process. This involves creating a .babelrc configuration file or using Babel configuration options in the package.json file to specify the desired plugins and presets.
+
+Here's an example of how you can use Babel with Parcel to remove console.log statements:
+
+- `Install Babel and the necessary plugins:`
+```bash
+npm install @babel/core @babel/cli @babel/preset-env @babel/plugin-transform-remove-console --save-dev
+```
+This command installs Babel and the required plugins as development dependencies. Babel's core functionality is provided by @babel/core. The @babel/cli package allows us to use Babel via the command line. @babel/preset-env is a preset that includes transformations for the latest ECMAScript features, and @babel/plugin-transform-remove-console is a plugin used to remove console logs from the code during the build process.
+
+- `Create a .babelrc file in the root of your project with the following content:`
+```json
+{
+  "presets": ["@babel/preset-env"],
+  "plugins": ["@babel/plugin-transform-remove-console"]
+}
+```
+
+- `In your package.json, modify the "scripts" section to include "build" with the babel command:`
+```json
+{
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "babel src -d dist && parcel build index.html"
+  }
+}
+```
+"build": This script first transpiles the JavaScript code in the src directory to the dist directory using Babel. The -d dist flag tells Babel to output the transpiled code in the dist directory. After transpilation, the script runs parcel build index.html to create an optimized production build. The parcel build command bundles all the assets and optimizes the output for deployment.
+
+- `Now you can build your project using the following command:`
+```bash
+npm run build
+```
+
+This will first run Babel to remove console.log statements from the code in the src directory and output the transformed code to the dist directory. Then, Parcel will bundle the transformed code and other assets for production.
+
+- Keep in mind that removing console.log statements can be useful for production builds, but during development, it's often helpful to keep them for debugging purposes. By using Babel with different configurations for development and production, you can control the behavior of your code transformations accordingly.
