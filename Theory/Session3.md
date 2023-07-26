@@ -149,3 +149,106 @@ npm run build
 This will first run Babel to remove console.log statements from the code in the src directory and output the transformed code to the dist directory. Then, Parcel will bundle the transformed code and other assets for production.
 
 - Keep in mind that removing console.log statements can be useful for production builds, but during development, it's often helpful to keep them for debugging purposes. By using Babel with different configurations for development and production, you can control the behavior of your code transformations accordingly.
+
+## Q : What is the purpose of .babelsrc?
+Ans:-The `.babelrc` configuration file is used to customize Babel's behavior when transpiling JavaScript code. It allows you to specify presets and plugins that determine how Babel transforms your code. By configuring `.babelrc`, you can target specific environments, handle browser compatibility, and optimize your code. It provides project-specific configuration separate from build tools, making it easier to switch between different tools.
+
+## Q : What is `key reconcilliation` in React?
+Ans:-React's `key reconciliation` refers to the process of efficiently updating the virtual DOM when rendering lists of elements. When rendering lists in React, each element in the list should have a unique "key" prop assigned to it. The key is used to help React identify which elements have changed, been added, or been removed in the list.
+
+## Q :What is `Diffing Algorithm`?
+Ans:-The diffing algorithm, also known as the reconciliation algorithm, is a core part of React's Virtual DOM and is responsible for efficiently updating the actual DOM with the changes made to the virtual DOM. It's one of the key reasons React is able to provide a performant and responsive user interface.
+
+When you make changes to the state or props of a React component, React creates a new virtual representation of the component's UI. This virtual representation is called the Virtual DOM. It is a lightweight copy of the actual DOM, stored in memory.
+
+Next, React performs a process called `diffing`, where it compares the new Virtual DOM with the previous one (the one before the changes). It identifies the differences or updates needed between the two virtual representations. This process involves comparing the element tree structure, attributes, and content of the old and new virtual DOMs.
+
+Once the differences are identified, React generates a minimal set of DOM manipulations required to update the actual DOM to reflect the changes. Instead of directly updating the whole DOM, it only modifies the parts that have changed. This minimizes the number of updates and boosts performance significantly.
+
+The diffing algorithm is crucial in ensuring that the updates to the DOM are efficient and that only the necessary changes are applied, leading to better performance and a smoother user experience.
+
+## Q :What `render function` do ?
+Ans :- In React, the render function is responsible for creating a virtual representation of the component's UI, which is then used to update the actual DOM.
+
+When a React component is first mounted or its state/props change, the render function is called.
+React calls the render method, which creates a new Virtual DOM representation based on the JSX returned from the render function.
+
+## Q :What does React.createElement do?
+Ans:-React.createElement is a function provided by React that is used to create React elements, which are lightweight descriptions of what you want to see on the screen. These elements are the building blocks of a React application's UI.
+
+When you call React.createElement, it returns a JavaScript object that represents a React element. This object contains information about the type of element (e.g., a div, a custom component, etc.), its props (properties), and any children elements it may have.
+
+For example, consider the following code:
+
+```jsx
+const element = React.createElement("div", { className: "container" }, "Hello, World!");
+```
+In this code, React.createElement will create a React element representing a div element with the class name "container" and containing the text "Hello, World!". The element object will look like this:
+
+```json
+{
+  "type": "div",
+  "props": {
+    "className": "container",
+    "children": "Hello, World!"
+  }
+}
+```
+After creating the React element, you can use it in your React components to build the UI. React will take care of rendering these elements into the actual DOM as needed, using the diffing and reconciliation process we discussed earlier.
+
+In summary, React.createElement is used to create React elements, which are JavaScript objects that represent the desired UI components and their structure. These elements are then used by React to efficiently update the DOM and render the user interface.
+
+## Q: What is JSX?
+Ans:-JSX stands for `JavaScript XML.` It is a syntax extension for JavaScript that allows you to write HTML-like code within JavaScript. JSX provides a more expressive and concise way to describe the structure of user interfaces, especially when working with React.
+
+With JSX, you can define React elements and components using a syntax similar to HTML, making it easier to visualize and understand the UI components you're building. It allows you to mix HTML-like tags and JavaScript expressions together, which makes it seamless to incorporate dynamic data into your UI.
+
+For example, in JSX, you can define a React component like this:
+
+```jsx
+import React from 'react';
+
+const MyComponent = () => {
+  return (
+    <div>
+      <h1>Hello, World!</h1>
+      <p>This is a JSX component.</p>
+    </div>
+  );
+};
+
+export default MyComponent;
+```
+The JSX code above looks very similar to HTML, but it is actually compiled to plain JavaScript by tools like `Babel` before being executed by the browser. The above code is equivalent to the following JavaScript code:
+
+```javascript
+import React from 'react';
+
+const MyComponent = () => {
+  return React.createElement('div', null,
+    React.createElement('h1', null, 'Hello, World!'),
+    React.createElement('p', null, 'This is a JSX component.')
+  );
+};
+
+export default MyComponent;
+```
+As you can see, JSX simplifies the process of creating React elements and components, making the code more readable and maintainable. It is a fundamental part of the React ecosystem and is widely used in React applications.
+
+## Q : What is differences between JSX and HTML ?
+Ans:-Here's a tabular format presenting the main differences between HTML and JSX:
+
+| Feature                        | HTML                                  | JSX                                    |
+|--------------------------------|--------------------------------------|----------------------------------------|
+| Syntax                         | Standard HTML                        | HTML-like syntax within JavaScript     |
+| Browser Support                | Supported by all browsers            | Requires transpilation (e.g., Babel)   |
+| Single Parent Element          | Not required, can have multiple root elements    | Must return a single parent element   |
+| JavaScript Embedding           | Requires `<script>` tags or external JavaScript files | Embedded directly using curly braces {} |
+| Self-closing Tags              | Optional to use slash (e.g., `<br>` or `<br />`) | Requires a slash (e.g., `<br />`)       |
+| Class and For Attributes       | Use `class` and `for`                  | Use `className` and `htmlFor`             |
+| Attribute and Event Naming     | Lowercase (e.g., `onclick`, `onmouseover`) | CamelCase (e.g., `onClick`, `onMouseOver`)|
+| Inline Styling                 | Can define styles directly in the opening tag using quotes | Define styles as an object using curly braces {} and pass it inline |
+| Support for JavaScript Expressions | Limited to inline JavaScript within attributes or scripts | Full support for embedding JavaScript expressions within curly braces {} |
+
+Note: JSX is specific to React and other libraries/frameworks that support it. It needs to be transpiled into standard JavaScript before it can be executed by browsers, which is typically done using build tools like Babel or Webpack.
+
