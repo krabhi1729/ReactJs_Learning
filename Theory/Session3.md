@@ -351,7 +351,7 @@ JSX expressions provide a powerful and flexible way to create dynamic UI compone
 ## Q :Why JSX is considered safe and sanitized for XSS Attack?
 Ans:-`XSS (Cross-Site Scripting)` is a security vulnerability that occurs when untrusted data is improperly handled and rendered in a web application, leading to the execution of malicious scripts in a user's browser. 
 
-SX is considered safe and sanitized by default. JSX automatically escapes any content rendered within curly braces {} to prevent XSS (Cross-Site Scripting) attacks. This means that when you use JSX to render dynamic content, it treats that content as plain text and not executable code.
+JSX is considered safe and sanitized by default. JSX automatically escapes any content rendered within curly braces {} to prevent XSS (Cross-Site Scripting) attacks. This means that when you use JSX to render dynamic content, it treats that content as plain text and not executable code.
 
 For example:
 
