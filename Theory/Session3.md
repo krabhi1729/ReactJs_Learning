@@ -372,3 +372,93 @@ export default MyComponent;
 ```
 Even if userInput contains a script tag as in the example above, it will not be executed as a script. Instead, it will be displayed as plain text in the rendered output, thus preventing any potential XSS attack.
 
+## Q.What is React component?
+`React Component`:
+A React component is a reusable building block that encapsulates a piece of the user interface. Components can be either class-based or functional.
+
+## Q.What is Functional Component?
+A `functional component` is a `JavaScript function` that returns JSX (JavaScript XML). It's a simpler and more concise way to define components compared to class-based components.
+
+
+
+## Q.How to Rendering React Elements?
+
+```javascript
+const heading = (
+  <h1 id="title">
+    Namaste React 
+  </h1>
+);
+
+const root=ReactDOM.createRoot(document.getElementById("root"));
+root.render(heading)//way to render react element
+```
+
+## Q.How to Rendering React Elements?
+```javascript
+const HeaderComponent = () => {
+  return (
+    <div>
+      <h1>Namaste React functional comp.</h1>
+      <h2>This is a h2 tag</h2>
+    </div>
+  )
+}
+
+const root=ReactDOM.createRoot(document.getElementById("root"));
+
+// root.render(<HeaderComponent/>)way to render fuctional component
+```
+
+## Q.How to Use React Element in Component?
+You can embed a React element within a component's JSX by wrapping it in curly braces. This allows you to dynamically include elements in your component's rendering.
+
+```javascript
+const HeaderComponent = () => {
+  return (
+    <div>
+      <h1>{heading} functional comp.</h1>
+      <h2>This is a h2 tag</h2>
+    </div>
+  )
+}
+```
+## Q.What is Component Composition?
+Component composition is the practice of using one component as a part of another component's rendering. This allows you to build complex UIs by combining smaller, reusable components.
+
+// Functional Component
+```javascript
+const InnerComponent = () => {
+  return <h1>This is the Inner Component</h1>;
+};
+
+const HeaderComponent = () => {
+  return (
+    <div>
+      <InnerComponent /> OR {InnerComponent()}{/* Using a functional component */}
+      <h2>This is a h2 tag</h2>
+    </div>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<HeaderComponent />);
+```
+## NOTE
+In jsx ,we can write any js script inside { }.
+```javascript
+const HeaderComponent = () => {
+  return (
+    <div>
+    { }
+      <h1>Namaste React functional comp.</h1>
+      <h2>This is a h2 tag</h2>
+    </div>
+  )
+}
+```
+
+
+
+
+
