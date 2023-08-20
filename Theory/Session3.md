@@ -435,7 +435,7 @@ const InnerComponent = () => {
 const HeaderComponent = () => {
   return (
     <div>
-      <InnerComponent /> OR {InnerComponent()}{/* Using a functional component */}
+      <InnerComponent /> OR {InnerComponent()} OR <InnerComponent></InnerComponent>{/* Using a functional component */}
       <h2>This is a h2 tag</h2>
     </div>
   );
