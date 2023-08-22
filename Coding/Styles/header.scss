@@ -1,0 +1,21 @@
+.header {
+ 
+
+    display: flex;
+    justify-content: space-between;
+    padding: 1px;
+    margin :8px;
+    border: 1px solid black;
+
+     .nav-items{
+
+      ul{
+      list-style-type: none;
+      display: flex;
+
+      li{
+        padding: 10px;
+      }
+      }
+    }
+  }

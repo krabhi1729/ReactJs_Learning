@@ -19,6 +19,7 @@
   "homepage": "https://github.com/krabhi1729/Learning_React.js#readme",
   "devDependencies": {
     "@babel/core": "^7.22.8",
+    "@parcel/transformer-sass": "^2.9.3",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "parcel": "^2.9.3",
     "process": "^0.11.10"
