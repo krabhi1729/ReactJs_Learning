@@ -81,7 +81,7 @@ const styleObj = {
 };
 
 const jsx = (
-  <div style={styleObj}>
+  <div style={styleObj}> or  <div style={ {backgroundColor: "red",}}>
     <h1>JSX</h1>
     <h1>Second JSX</h1>
   </div>
