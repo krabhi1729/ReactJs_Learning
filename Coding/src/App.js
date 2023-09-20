@@ -5,9 +5,9 @@ import "../Styles/header.scss";
 import "../Styles/logo.scss"; 
 import "../Styles/restaurantCard.scss"; 
 import "../Styles/body.scss"; 
-import Title from "./components/Title";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 
 // const AppLayout = () => {
@@ -33,37 +33,9 @@ import Footer from "./components/Footer";
 //   )
 // }
 
-
-
-
-
-const Header= () => {
-  return (
-  
-    <div className="header ">
-      <Title/>
-      <div className="nav-items">
-        <ul>
-          <li>Home</li>
-           <li>About</li>
-            <li>Contact</li>
-             <li>Cart</li>
-        </ul>
-      </div>
-    </div>
-   
-  );
-};
-
-
-
-
-
-
 const AppLayout = () => {
   return (
     <>
-    
     <Header/>
     <Body/>
     <Footer/>
@@ -71,10 +43,5 @@ const AppLayout = () => {
   )
 }
 
-
-
-
-
 const root=ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayout/>)//way to render react element
-// root.render(<HeaderComponent/>)way to render fuctional component
+root.render(<AppLayout/>)
