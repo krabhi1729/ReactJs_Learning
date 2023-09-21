@@ -1,3 +1,62 @@
 #container{
     background-color: aqua;
 }
+
+/* ShimmerUI.css */
+.shimmer-card-list {
+  display: flex;
+  flex-wrap: wrap; /* Add this line to enable wrapping */
+  justify-content: space-between; /* Adjust this as needed */
+}
+
+.shimmer-card {
+  width: 200px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  background-color: #f3f3f3;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.shimmer-image {
+  width: 100%;
+  height: 100px;
+  background-color: #ccc;
+  border-radius: 4px 4px 0 0;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.shimmer-title {
+  width: 80%;
+  height: 16px;
+  background-color: #ccc;
+  margin: 10px auto;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.shimmer-cuisines {
+  width: 90%;
+  height: 16px;
+  background-color: #ccc;
+  margin: 0 auto;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.shimmer-rating {
+  width: 40px;
+  height: 16px;
+  background-color: #ccc;
+  margin: 10px auto;
+  animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}

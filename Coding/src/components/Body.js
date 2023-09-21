@@ -1,16 +1,17 @@
-import { restaurantList } from "../components/constants";
 import RestaurantCard from "../components/RestaurantCard";
 import { useState, useEffect } from "react";
+import { ShimmerUI } from "../components/ShimmerUI";
 
-function filterData(searchTxt, restaurants) {
-  const filterData = restaurants.filter((restaurant) =>
-    restaurant.data.name.includes(searchTxt)
+function filterData(searchTxt, allRestaurants) {
+  const filterData = allRestaurants.filter((restaurant) =>
+    restaurant?.info?.name.toLowerCase()?.includes(searchTxt.toLowerCase())
   );
   return filterData;
 }
 
 const Body = () => {
-  const [restaurants, setRestaurants] = useState(restaurantList);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [allRestaurants, setAllRestaurants] = useState([]);
 
   const [searchTxt, setSearchTxt] = useState("");
 
@@ -27,11 +28,23 @@ const Body = () => {
     console.log(
       json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
-    setRestaurants(
+    setAllRestaurants(
+      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    setFilteredRestaurants(
       json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   }
-  return (
+if(!allRestaurants) returns (<h1>Restaurants are null</h1>)
+  return allRestaurants?.length === 0  ? (
+    <ShimmerUI
+      cardData={Array(16).fill({
+        title: "",
+        cuisines: "",
+        rating: "",
+      })}
+    />
+  ) : (
     <>
       <div className="search-container">
         <input
@@ -47,19 +60,23 @@ const Body = () => {
         <button
           className="search-btn"
           onClick={() => {
-            const data = filterData(searchTxt, restaurants);
-            setRestaurants(data);
+            const data = filterData(searchTxt, allRestaurants);
+            setFilteredRestaurants(data);
           }}
         >
           Search
         </button>
       </div>
       <div className="restaurant-list  ">
-        {restaurants.map((restaurant) => {
-          return (
-            <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
-          );
-        })}
+        {filteredRestaurants.length === 0  ? (
+          <p>No Restaurant Found</p>
+        ) : (
+          filteredRestaurants.map((restaurant) => {
+            return (
+              <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+            );
+          })
+        )}
       </div>
     </>
   );
