@@ -1,6 +1,6 @@
 import "../../index.css";
 
-export const ShimmerUI = ({ cardData }) => {
+export const ShimmerUI = ({ cardData })  => {
   return (
     <div className="shimmer-card-list">
       {cardData.map((card, index) => (

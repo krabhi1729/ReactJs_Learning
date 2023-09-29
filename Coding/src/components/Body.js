@@ -1,6 +1,7 @@
 import RestaurantCard from "../components/RestaurantCard";
 import { useState, useEffect } from "react";
 import { ShimmerUI } from "../components/ShimmerUI";
+import { restaurantData } from "./constants";
 
 function filterData(searchTxt, allRestaurants) {
   const filterData = allRestaurants.filter((restaurant) =>
@@ -20,22 +21,21 @@ const Body = () => {
   }, []);
 
   async function getRestaurants() {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING"
-    );
-    const json = await data.json();
-    console.log(json);
-    console.log(
-      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
+  
+    // const data = await fetch(
+    //   "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING"
+    // );
+    // const json = await data.json();
+  
+    
     setAllRestaurants(
-      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      restaurantData?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     setFilteredRestaurants(
-      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      restaurantData?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   }
-if(!allRestaurants) returns (<h1>Restaurants are null</h1>)
+if(!allRestaurants) return (<h1>Restaurants are null</h1>)
   return allRestaurants?.length === 0  ? (
     <ShimmerUI
       cardData={Array(16).fill({
