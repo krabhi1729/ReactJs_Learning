@@ -1,8 +1,10 @@
 import RestaurantCard from "../components/RestaurantCard";
 import { useState, useEffect } from "react";
 import { ShimmerUI } from "../components/ShimmerUI";
-import { restaurantData } from "./constants";
+import { swiggy_api_URL } from "../components/Constants";
+import {Link} from "react-router-dom";
 
+// Filter the restaurant data according input type
 function filterData(searchTxt, allRestaurants) {
   const filterData = allRestaurants.filter((restaurant) =>
     restaurant?.info?.name.toLowerCase()?.includes(searchTxt.toLowerCase())
@@ -10,30 +12,47 @@ function filterData(searchTxt, allRestaurants) {
   return filterData;
 }
 
+// Body Component for body section: It contain all restaurant cards
 const Body = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [allRestaurants, setAllRestaurants] = useState([]);
+const [searchTxt, setSearchTxt] = useState("");
 
-  const [searchTxt, setSearchTxt] = useState("");
-
+  // use useEffect for one time call getRestaurants using empty dependency array
   useEffect(() => {
     getRestaurants();
   }, []);
 
+ // async function getRestaurant to fetch Swiggy API data
   async function getRestaurants() {
-  
-    // const data = await fetch(
-    //   "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING"
-    // );
-    // const json = await data.json();
-  
-    
-    setAllRestaurants(
-      restaurantData?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setFilteredRestaurants(
-      restaurantData?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
+    // handle the error using try... catch
+    try {
+      const response = await fetch(swiggy_api_URL);
+      const json = await response.json();
+
+      // initialize checkJsonData() function to check Swiggy Restaurant data
+      async function checkJsonData(jsonData) {
+        for (let i = 0; i < jsonData?.data?.cards.length; i++) {
+
+          // initialize checkData for Swiggy Restaurant data
+          let checkData = json?.data?.cards[i]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+
+          // if checkData is not undefined then return it
+          if (checkData !== undefined) {
+            return checkData;
+          }
+        }
+      }
+
+      // call the checkJsonData() function which return Swiggy Restaurant data
+      const resData = await checkJsonData(json);
+
+      // update the state variable restaurants with Swiggy API data
+      setAllRestaurants(resData);
+      setFilteredRestaurants(resData);
+    } catch (error) {
+      console.log(error);
+    }
   }
 if(!allRestaurants) return (<h1>Restaurants are null</h1>)
   return allRestaurants?.length === 0  ? (
@@ -73,7 +92,9 @@ if(!allRestaurants) return (<h1>Restaurants are null</h1>)
         ) : (
           filteredRestaurants.map((restaurant) => {
             return (
-              <RestaurantCard {...restaurant.info} key={restaurant.info.id} />
+              <Link to={"/restaurant/"+restaurant.info.id} key={restaurant.info.id}>
+              <RestaurantCard {...restaurant.info}  />
+              </Link>
             );
           })
         )}

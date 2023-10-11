@@ -1,5 +1,5 @@
 import { IMG_CDN_URL } from "./constants";
-import { Rate } from "antd";
+
 
 const RestaurantCard = ({ name, cuisines, cloudinaryImageId, avgRating }) => {
   // Calculate the number of stars based on avgRating
@@ -7,12 +7,12 @@ const RestaurantCard = ({ name, cuisines, cloudinaryImageId, avgRating }) => {
 
   return (
     <div className="card">
-      <img src={IMG_CDN_URL + cloudinaryImageId} alt={name} />
+      <img src={IMG_CDN_URL + cloudinaryImageId} alt={name}  />
       <h2>{name}</h2>
-      <h3>Cuisines: {cuisines.join(", ")}</h3>
-      <h4>
-        Average Rating: <Rate disabled defaultValue={avgRating} />
-      </h4>
+      <h3>{cuisines.join(", ")}</h3>
+      <div className="rating">
+     {avgRating}
+      </div>
     </div>
   );
 };
