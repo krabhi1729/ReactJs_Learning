@@ -1,6 +1,5 @@
 import { IMG_CDN_URL } from "./constants";
 
-
 const RestaurantCard = ({ name, cuisines, cloudinaryImageId, avgRating }) => {
   // Calculate the number of stars based on avgRating
   // const starCount = Math.floor(avgRating);
