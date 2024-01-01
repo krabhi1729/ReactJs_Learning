@@ -3,14 +3,8 @@ import { useState, useEffect } from "react";
 import { ShimmerUI } from "../components/ShimmerUI";
 import { swiggy_api_URL } from "../components/Constants";
 import {Link} from "react-router-dom";
+import { filterData } from "./utils/helper";
 
-// Filter the restaurant data according input type
-function filterData(searchTxt, allRestaurants) {
-  const filterData = allRestaurants.filter((restaurant) =>
-    restaurant?.info?.name.toLowerCase()?.includes(searchTxt.toLowerCase())
-  );
-  return filterData;
-}
 
 // Body Component for body section: It contain all restaurant cards
 const Body = () => {

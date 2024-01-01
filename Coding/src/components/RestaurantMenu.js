@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import {
   swiggy_menu_api_URL,
@@ -7,49 +7,14 @@ import {
   MENU_ITEM_TYPE_KEY,
   RESTAURANT_TYPE_KEY,
 } from "../components/Constants";
-
+import useFetchRestaurantData from "./utils/useFetchRestaurantData";
 
 const RestaurantMenu = () => {
-  const [restaurant, setRestaurant] = useState({});
   const { id } = useParams();
-const [menuItems, setMenuItems] = useState([]);
-  useEffect(() => {
-    getRestaurantInfo(); // call getRestaurantInfo function so it fetch api data and set data in restaurant state variable
-  }, []);
-
-  async function getRestaurantInfo() {
-    try {
-      const response = await fetch(swiggy_menu_api_URL + id);
-      const json = await response.json();
-
-      // Set restaurant data
-      const restaurantData = json?.data?.cards?.map(x => x.card)?.
-                             find(x => x && x.card['@type'] === RESTAURANT_TYPE_KEY)?.card?.info || null;
-      setRestaurant(restaurantData);
-
-      // Set menu item data
-      const menuItemsData = json?.data?.cards.find(x=> x.groupedCard)?.
-                            groupedCard?.cardGroupMap?.REGULAR?.
-                            cards?.map(x => x.card?.card)?.
-                            filter(x=> x['@type'] == MENU_ITEM_TYPE_KEY)?.
-                            map(x=> x.itemCards).flat().map(x=> x.card?.info) || [];
-      console.log(menuItemsData)
-      const uniqueMenuItems = [];
-      menuItemsData.forEach((item) => {
-        if (!uniqueMenuItems.find(x => x.id === item.id)) {
-          uniqueMenuItems.push(item);
-        }
-      })
-      setMenuItems(uniqueMenuItems);
-    } catch (error) {
-      setMenuItems([]);
-      setRestaurant(null);
-      console.log(error);
-    }
-  }
-
+  const apiUrl = swiggy_menu_api_URL;
+  const { restaurant, menuItems } = useFetchRestaurantData(id, apiUrl);
   return (
-   <div className="restaurant-menu">
+    <div className="restaurant-menu">
       <div className="restaurant-summary">
         <img
           className="restaurant-img"
@@ -60,14 +25,17 @@ const [menuItems, setMenuItems] = useState([]);
           <h2 className="restaurant-title">{restaurant?.name}</h2>
           <p className="restaurant-tags">{restaurant?.cuisines?.join(", ")}</p>
           <div className="restaurant-details">
-            <div className="restaurant-rating" style={
-            (restaurant?.avgRating) < 4
-              ? { backgroundColor: "var(--light-red)" }
-              : (restaurant?.avgRating) === "--"
-              ? { backgroundColor: "white", color: "black" }
-              : { color: "white" }
-          }>
-            <i className="fa-solid fa-star"></i>
+            <div
+              className="restaurant-rating"
+              style={
+                restaurant?.avgRating < 4
+                  ? { backgroundColor: "var(--light-red)" }
+                  : restaurant?.avgRating === "--"
+                  ? { backgroundColor: "white", color: "black" }
+                  : { color: "white" }
+              }
+            >
+              <i className="fa-solid fa-star"></i>
               <span>{restaurant?.avgRating}</span>
             </div>
             <div className="restaurant-rating-slash">|</div>
@@ -82,9 +50,7 @@ const [menuItems, setMenuItems] = useState([]);
         <div className="menu-items-container">
           <div className="menu-title-wrap">
             <h3 className="menu-title">Recommended</h3>
-            <p className="menu-count">
-              {menuItems.length} ITEMS
-            </p>
+            <p className="menu-count">{menuItems.length} ITEMS</p>
           </div>
           <div className="menu-items-list">
             {menuItems.map((item) => (
